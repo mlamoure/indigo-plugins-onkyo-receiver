@@ -80,7 +80,7 @@ class ReceiverTransport:
                 try:
                     sock.setsockopt(socket.IPPROTO_TCP, option, value)
                 except OSError as exc:
-                    self.logger.warning("TCP keepalive tuning unavailable: %s", exc)
+                    self.logger.warning(f"TCP keepalive tuning unavailable: {exc}")
 
     def _disconnect(self, reason, expected=None):
         with self._lock:
@@ -181,7 +181,7 @@ class ReceiverTransport:
                         self._receive(sock, message)
             except (OSError, ValueError) as exc:
                 if not self._stop.is_set():
-                    self.logger.warning("Receiver connection lost: %s", exc)
+                    self.logger.warning(f"Receiver connection lost: {exc}")
             except Exception:
                 self.logger.exception("Receiver callback failed")
             finally:
